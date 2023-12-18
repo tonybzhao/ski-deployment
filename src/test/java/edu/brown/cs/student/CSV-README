@@ -1,0 +1,62 @@
+PROJECT DETAILS
+CSV Project
+My cslogin: tpezza
+It took me about 8 hours to complete CSV.
+A link to your repo : https://github.com/cs0320-f23/csv-tyypezza.git
+
+DESIGN CHOICES
+I feel like I implemented parse pretty straightforward. Parse takes in a Reader
+with the CSV file path to parse, and a custom CreatorFromRow, and outputs
+a List of the desired object. I chose to write a simple parseRow method, that splits
+the string of each CSV row into a List<String> with the given regex. This could have
+been done inside parse, but I felt it was cleaner separate.
+
+For search, I added multiple parameters. First I had a String for file path and
+one for item to be searched. I also has a boolean for if the CSV had headers,
+and if the user wanted to check case of the searched item.
+Next, I added a parameter that took in my Custom enum
+Identifier, which is either NONE for no identifier, INDEX for column index, or HEADER
+if you wanted to search by header. This allowed me to work through each option in my
+search method cleaner. Then the I added a parameter for the actual Column Identifier,
+which would be a String of the header or a String with a number representing Index. This
+would get cast to an int. I also found the index of the header and used that to
+pick the column as I searched rows.
+
+ERRORS/BUGS
+The only bug I  ran into that weren't simple code fixes was with a custom CreatorFromRow.
+The bugs arose because my custom creator had to take in a very specific row. Because of this,
+the custom creator must be very specific and catch/throw errors if the CSV rows it is parsing
+are not well made for it.
+
+TESTS
+For parse testing I had two main criteria. A basic creator (list fo strings) and a custom,
+which I created with a simple class DimensionTestClass. With the basic creator, I tested a
+simple CSV with a file reader and a string reader, then an uneven CSV (different size rows).
+With the custom, I tested a CSV with correct data, then two CSVs that each had one of the
+possible errors my custom creator could have.
+
+For search testing I just went through each possible output I could think of. I tested
+on two simple files, and one that had uneven rows. I tested basic searches, searches
+with and without headers. This made sure that if a CSV had headers, I wouldn't look
+in the first row. I tested when the item was found in multiple rows, and when
+case did and didn't matter. I also tested looking in a certain index and header, and
+when the item was in the CSV but not the specific column. Then also when
+item was not in CSV, and when there was a row without an item in the specific coloumn.
+
+HOW TO RUN TESTS
+To run tests, you can go to ParseTest and SearchTest and run the files or individual
+tests. You can also create and run more using either new objects or the ones
+I created in @before.
+
+HOW TO BUILD/RUN PROGRAM
+For an end-user looking to search, all you need are your file paths. You can go
+to main, run the method, and a scanner will give you prompts in the terminal
+to easily customize your search. If you wanted, you also could create your own main
+method and your own search object and run the search method yourself.
+
+For a developer looking to parse, you will have to run your own main method with
+your own Reader with your CSV file path and your custom CreatorFromRow class.
+You will simply have to initialize a parse object and call parse, and it will return
+your CSV parsed.
+
+
